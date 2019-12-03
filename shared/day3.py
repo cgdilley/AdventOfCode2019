@@ -2,20 +2,19 @@ from __future__ import annotations
 from typing import Iterable, List, Dict, Tuple
 
 
-def main():
-    wire1, wire2 = load_wires()
-
-    intersections = wire1.get_intersections(wire2)
-
-    closest = min(intersections, key=manhattan)
-
-    print("Closest intersection: (%d, %d), with distance of %d" % (closest[0], closest[1], manhattan(closest)))
-
-
 class Wire:
 
-    def __init__(self, coords: Iterable[Tuple[int, int]]):
-        self.coords = {k: None for k in coords}
+    def __init__(self, coords: Iterable[Tuple[int, int]], corners: Iterable[Tuple[int, int]] = None):
+        self.coords = dict()
+        self.raw = list(coords)
+        step = 0
+        for coord in coords:
+            step += 1
+            # Store coords with their minimum step distance
+            if coord not in self.coords:
+                self.coords[coord] = step
+
+        self.total_length = step
 
     def on_wire_path(self, pos: Tuple[int, int]) -> bool:
         return pos in self.coords
@@ -54,7 +53,3 @@ def load_wires() -> Tuple[Wire, Wire]:
 
 def manhattan(pos: Tuple[int, int]):
     return abs(pos[0]) + abs(pos[1])
-
-
-if __name__ == "__main__":
-    main()
