@@ -11,7 +11,7 @@ Coord = Tuple[int, int]
 def main():
     wire1, wire2 = load_wires()
 
-    render_wires(wire1, wire2, progressive=True, speed=20)
+    render_wires(wire1, wire2, progressive=True, speed=30)
 
 
 #
