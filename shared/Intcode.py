@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Tuple, List, Iterable, Optional, Dict, Union
+from typing import Tuple, List, Iterable, Optional, Dict, Union, Callable
 from abc import ABC, abstractmethod
 import math
 
@@ -241,7 +241,23 @@ class Computer:
             running = self.next()
         return self.outputs
 
+    def run_until_output(self) -> Optional[int]:
+        """
+        Operates similar to run(), but when it detects output having been generated, pauses the running
+        of the computer and pops that output value from the output list and returns it.  If the computer halts
+        rather than producing an output, returns None.
+        """
+        running = self.pos < len(self.registers)
+        while running:
+            running = self.next()
+            if len(self.outputs) > 0:
+                return self.outputs.pop(0)
+        return None
+
+    @classmethod
+    def from_string(cls, s: str, inputs: Optional[List[int]] = None) -> Computer:
+        return Computer(cls.parse_registers(s), inputs=inputs)
+
     @staticmethod
-    def from_string(s: str, inputs: Optional[List[int]] = None) -> Computer:
-        return Computer([int(x.strip()) for x in s.split(",")],
-                        inputs=inputs)
+    def parse_registers(s: str) -> List[int]:
+        return [int(x.strip()) for x in s.split(",")]
