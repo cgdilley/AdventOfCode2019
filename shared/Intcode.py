@@ -249,9 +249,9 @@ class Computer:
         """
         running = self.pos < len(self.registers)
         while running:
-            running = self.next()
             if len(self.outputs) > 0:
                 return self.outputs.pop(0)
+            running = self.next()
         return None
 
     @classmethod
