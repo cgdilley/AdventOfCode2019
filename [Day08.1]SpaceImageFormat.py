@@ -6,8 +6,7 @@ def main():
 
     layer_info = count_digits_per_layer(image, width=25, height=6, layers=len(image))
 
-    fewest_zeroes_layer, fewest_zeroes_info = min([(layer, info) for layer, info in layer_info.items()],
-                                                  key=lambda i: i[1][0])
+    fewest_zeroes_layer, fewest_zeroes_info = min(layer_info.items(), key=lambda i: i[1][0])
     print("The layer with the fewest 0s is layer %d, with %d 0s.  This layer has %d 1s and %d 2s, which "
           "multiplied together = %d." % (
               fewest_zeroes_layer,
