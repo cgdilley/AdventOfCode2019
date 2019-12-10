@@ -38,12 +38,10 @@ def render_wires(*wires: Wire, progressive: bool, speed: int):
     scale_y = 1 if height < max_height else max_height / height
     if scale_x < scale_y:
         scale = scale_x
-        width = int(width * scale_x)
-        height = int(width * scale_x)
     else:
         scale = scale_y
-        width = int(width * scale_y)
-        height = int(height * scale_y)
+    width = int(width * scale)
+    height = int(height * scale)
 
     screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
 
