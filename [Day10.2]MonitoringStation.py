@@ -62,7 +62,7 @@ def run_laser(source: Coord, until_num_destroyed: int, asteroids: Set[Coord],
                 destroyed.append(asteroid_list.pop(0))
                 if render_speed is not None:
                     if render_speed <= 0 or len(destroyed) % render_speed == 0:
-                        render_asteroids(screen, asteroids, destroyed, source, bounds, scale,
+                        render_asteroids(screen, asteroids, destroyed, source, scale,
                                          pause_for_clicks=render_speed == 0)
                     if render_speed < 0:
                         time.sleep(-render_speed / 1000)
@@ -98,7 +98,7 @@ def build_game_screen(bounds: Coord, max_width: int = 1920, max_height: int = 10
 
 
 def render_asteroids(screen: pygame.Surface, asteroids: Set[Coord], destroyed: List[Coord], source: Coord,
-                     bounds: Coord, scale: float, pause_for_clicks: bool):
+                     scale: float, pause_for_clicks: bool):
     """
     Renders all asteroids, and draws a laser from the source to the last destroyed asteroid.
 
@@ -106,7 +106,6 @@ def render_asteroids(screen: pygame.Surface, asteroids: Set[Coord], destroyed: L
     @param asteroids: The set of all asteroid coordinates
     @param destroyed: The set of all destroyed asteroid coordinates
     @param source: The source coordinates of the laser
-    @param bounds: The maximum X and Y values of the grid space, as a single coordinate
     @param scale: The drawing scale
     @param pause_for_clicks: Whether or not the game should wait on mouse clicking input before continuing after
     having rendered the asteroids.
