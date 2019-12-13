@@ -263,16 +263,20 @@ class Computer:
 
     def __init__(self, registers: List[int], pos: int = 0,
                  inputs: Optional[List[int]] = None,
-                 relative_base: int = 0):
+                 relative_base: int = 0,
+                 input_method: Callable[[Computer], int] = None):
         self.registers = registers
         self.sparse_registers = dict()
         self.pos = pos
         self.relative_base = relative_base
         self.inputs = inputs if inputs else []
         self.outputs = []
+        self.input_method = input_method
 
     def request_input(self) -> int:
         if len(self.inputs) == 0:
+            if self.input_method is not None:
+                return self.input_method(self)
             return int(input("?? "))
         else:
             return self.inputs.pop(0)
@@ -307,6 +311,15 @@ class Computer:
                 return self.outputs.pop(0)
             running = self.next()
         return None
+
+    def run_until_outputs(self, count: int) -> Optional[List[int]]:
+        values = []
+        for i in range(count):
+            o = self.run_until_output()
+            if o is None:
+                return None
+            values.append(o)
+        return values
 
     def get_register(self, reg: int) -> int:
         if reg < 0:
